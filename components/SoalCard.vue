@@ -11,7 +11,7 @@ const badge = { Mudah: 'text-emerald-400', Sedang: 'text-amber-400', Sulit: 'tex
       <span :class="['rounded-full border border-current px-2.5 py-0.5 text-xs font-semibold', badge[soal.tingkat_kesulitan]]">{{ soal.tingkat_kesulitan }}</span>
     </div>
     <MathText :text="soal.pertanyaan" />
-    <img v-if="soal.gambar_url" :src="soal.gambar_url" alt="" class="mt-3 max-w-full rounded-lg" loading="lazy">
+    
     <button class="mt-3 rounded-lg px-4 py-2 font-semibold" :class="open ? 'border border-amber-400 text-amber-400' : 'bg-amber-400 text-stone-950'"
       :aria-expanded="open" @click="open = !open">{{ open ? 'Tutup Pembahasan' : 'Buka Pembahasan' }}</button>
     <!-- FR-05: v-if => MathText (dan parsing KaTeX) baru dibuat saat panel dibuka -->
@@ -19,6 +19,7 @@ const badge = { Mudah: 'text-emerald-400', Sedang: 'text-amber-400', Sulit: 'tex
       <h4 class="mb-2 text-xs font-semibold uppercase tracking-wider text-amber-400">Pembahasan</h4>
       <MathText :text="soal.pembahasan" />
       <FunctionGraph v-if="soal.grafik" :spec="soal.grafik" />
+      <img v-if="soal.gambar_url" :src="soal.gambar_url" alt="Gambar pembahasan" class="mt-3 max-w-full rounded-lg" loading="lazy">
     </div>
   </article>
 </template>
