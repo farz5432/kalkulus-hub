@@ -7,6 +7,6 @@ const list = computed(() => soal.value.filter(s => s.kategori === kategori && s.
   <Crumb :parts="[kategori, sub, materi]" />
   <h1 class="text-3xl font-extrabold">{{ materi }}</h1>
   <p class="mb-5 mt-1 text-stone-400">{{ list.length }} soal. Coba kerjakan dulu sebelum membuka pembahasan.</p>
-  <SoalCard v-for="s in list" :key="s.id" :soal="s" />
+  <SoalCard v-for="(s, i) in list" :key="s.id" :soal="s" :no="i + 1" />
   <p v-if="!list.length" class="py-8 text-stone-400">Belum ada soal di materi ini.</p>
 </template>
