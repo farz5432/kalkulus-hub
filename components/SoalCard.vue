@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Soal } from '~/composables/useSoal'
-defineProps<{ soal: Soal }>()
+defineProps<{ soal: Soal; no: number }>()
 const open = ref(false) // FR-02: tertutup default
 const badge = { Mudah: 'text-emerald-400', Sedang: 'text-amber-400', Sulit: 'text-red-400' }
 </script>

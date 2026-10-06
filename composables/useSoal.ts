@@ -27,9 +27,11 @@ const canon = (rows: Soal[], field: Field) => {
 export const useSoal = async () => {
   const soal = useState<Soal[]>('soal', () => [])
   if (!soal.value.length) {
-    const { data, error } = await useSupabaseClient().from('soal').select('*').order('kode_soal')
+    const { data, error } = await useSupabaseClient().from('soal').select('*')
     if (error) throw createError({ statusCode: 500, statusMessage: error.message })
     const rows = (data ?? []) as Soal[]
+    // urut angka: "no 2" sebelum "no 10"
+    rows.sort((a, b) => a.kode_soal.localeCompare(b.kode_soal, undefined, { numeric: true }))
     ;(['kategori', 'sub_kategori', 'materi'] as Field[]).forEach(f => canon(rows, f))
     soal.value = rows
   }
