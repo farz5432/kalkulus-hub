@@ -7,8 +7,6 @@ export interface Soal {
 type Field = 'kategori' | 'sub_kategori' | 'materi'
 const norm = (s: string) => s.trim().replace(/\s+/g, ' ')
 
-// Samakan penulisan yang hanya beda huruf besar-kecil atau spasi.
-// Label yang dipakai adalah versi yang paling banyak muncul di database.
 const canon = (rows: Soal[], field: Field) => {
   const groups = new Map<string, Map<string, number>>()
   for (const r of rows) {
@@ -23,15 +21,15 @@ const canon = (rows: Soal[], field: Field) => {
   for (const r of rows) r[field] = best.get(norm(r[field]).toLowerCase())!
 }
 
-// FR-04: satu kali fetch, disimpan di useState (ikut ter-hydrate dari SSR), navigasi berikutnya instan
+const numOf = (s: string) => { const m = (s ?? '').match(/\d+/); return m ? parseInt(m[0], 10) : Infinity }
+
 export const useSoal = async () => {
   const soal = useState<Soal[]>('soal', () => [])
   if (!soal.value.length) {
     const { data, error } = await useSupabaseClient().from('soal').select('*')
     if (error) throw createError({ statusCode: 500, statusMessage: error.message })
     const rows = (data ?? []) as Soal[]
-    // urut angka: "no 2" sebelum "no 10"
-    rows.sort((a, b) => a.kode_soal.localeCompare(b.kode_soal, undefined, { numeric: true }))
+    rows.sort((a, b) => numOf(a.kode_soal) - numOf(b.kode_soal) || (a.kode_soal ?? '').localeCompare(b.kode_soal ?? ''))
     ;(['kategori', 'sub_kategori', 'materi'] as Field[]).forEach(f => canon(rows, f))
     soal.value = rows
   }
