@@ -15,11 +15,11 @@ const badge = { Mudah: 'text-emerald-400', Sedang: 'text-amber-400', Sulit: 'tex
     <button class="mt-3 rounded-lg px-4 py-2 font-semibold" :class="open ? 'border border-amber-400 text-amber-400' : 'bg-amber-400 text-stone-950'"
       :aria-expanded="open" @click="open = !open">{{ open ? 'Tutup Pembahasan' : 'Buka Pembahasan' }}</button>
     <!-- FR-05: v-if => MathText (dan parsing KaTeX) baru dibuat saat panel dibuka -->
-    <div v-if="open" class="mt-4 rounded-r-xl border-l-4 border-amber-400 bg-amber-950/40 p-4">
-      <h4 class="mb-2 text-xs font-semibold uppercase tracking-wider text-amber-400">Pembahasan</h4>
-      <MathText :text="soal.pembahasan" />
-      <FunctionGraph v-if="soal.grafik" :spec="soal.grafik" />
-      <img v-if="soal.gambar_url" :src="soal.gambar_url" alt="Gambar pembahasan" class="mt-3 max-w-full rounded-lg" loading="lazy">
-    </div>
+    <div v-if="open" class="solution mt-4">
+  <h4 class="mb-2 text-xs font-semibold uppercase tracking-wider t-ac">Pembahasan</h4>
+  <img v-if="soal.gambar_url" :src="soal.gambar_url" alt="Gambar pembahasan" class="mb-3 max-w-full rounded-lg" loading="lazy">
+  <MathText :text="soal.pembahasan" />
+  <FunctionGraph v-if="soal.grafik" :spec="soal.grafik" />
+</div>
   </article>
 </template>
