@@ -1,5 +1,4 @@
 <script setup lang="ts">
-defineProps<{ soal: Soal; no: number }>()
 const { kategori, sub, materi } = useRoute().params as Record<string, string>
 const soal = await useSoal()
 const list = computed(() => soal.value.filter(s => s.kategori === kategori && s.sub_kategori === sub && s.materi === materi))

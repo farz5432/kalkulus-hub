@@ -5,8 +5,9 @@ export interface Soal {
 }
 
 type Field = 'kategori' | 'sub_kategori' | 'materi'
-const norm = (s: string) => s.trim().replace(/\s+/g, ' ')
+const norm = (s: string) => (s ?? '').trim().replace(/\s+/g, ' ')
 
+// Samakan penulisan yang hanya beda huruf besar-kecil atau spasi.
 const canon = (rows: Soal[], field: Field) => {
   const groups = new Map<string, Map<string, number>>()
   for (const r of rows) {
@@ -21,6 +22,7 @@ const canon = (rows: Soal[], field: Field) => {
   for (const r of rows) r[field] = best.get(norm(r[field]).toLowerCase())!
 }
 
+// Angka pertama dari kode_soal: "14", "no 10", "Q7" semuanya terbaca
 const numOf = (s: string) => { const m = (s ?? '').match(/\d+/); return m ? parseInt(m[0], 10) : Infinity }
 
 export const useSoal = async () => {
